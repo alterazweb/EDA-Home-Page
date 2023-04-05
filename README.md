@@ -1,2 +1,2 @@
 # Шаблон в папке 'PSD model' - EDA-Home-Page
- <img src="PSD model/EDA-Home-Page.png" height="50%"/>
+ <img src="PSD model/EDA Home Page (Free PSD).png" height="50%"/>
