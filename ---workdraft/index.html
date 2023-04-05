@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <title>EDA Home Page</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <meta name="description" content="EDA Page">
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <style>
+             @font-face {
+                font-family: 'PFDinTextCompPro';
+                src: url('fonts/pfdintextcomppro-regular.woff2') format('woff2');
+            }
+            @font-face {
+                font-family: 'RobotoCondensed';
+                src: url('fonts/Roboto-Condensed-Regular.woff2') format('woff2');
+            }
+
+            *,*:before,*:after {          
+                box-sizing: border-box;
+            }
+            body {
+                /*min-height: 100vh;      /*Браузер заставляет тело быть высотой окна, а не высотой содержимого. Поэтому запись min-height: 100% для Body не сработает*/
+                width: 1366px;
+                margin: 0px auto;
+                background-color: rgb(252, 252, 252);
+                font-family: "PFDinTextCompPro";
+            }
+            .artboard {
+                display: inline-flex;
+                border: 1px solid rgb(127,127,127);
+            }
+            .Menu {
+                width: 173px;
+                background-color: rgb(47, 48, 50);
+                font-size: 14px;
+                color: rgb(239, 239, 239);
+                text-align: center;
+                align-self: stretch;    /*растягиваем блок на всю высоту flex*/
+            }
+            .Menu img:first-of-type {
+                margin-top: 35px;
+                width: 64px;
+                height: 40px;
+            }
+            .Menu ul {
+                padding: 0px;
+                margin: 35px 0px 277px 0px;
+            }
+            .Menu li {
+                line-height: 2.571;
+                list-style: none;
+                height: 36px;   /*по макету*/
+                position: relative;
+            }
+            .Menu li:hover {
+                cursor: pointer;
+                color: rgb(255, 255, 255);
+                background-color: rgb(37, 38, 40);
+            }
+            .Menu li:hover::before {
+                content: "";
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                bottom: 0px;
+                width: 4px;
+                background-color: rgb(217, 190, 143);
+            }
+            .Menu div {
+                margin-bottom: 22px;
+            }
+            .Menu input[type=radio] {
+                display: none;
+            }
+            .Menu input[type=radio]:checked + label {
+                color: rgb(115, 115, 115);
+            }
+            .Menu label {
+                cursor: pointer;
+            }
+            .Menu label:first-of-type {
+                margin-right: 5px;
+            }
+            header {
+                height: 42px;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                flex-wrap: nowrap;
+                /*width: 1096px;*/
+                margin: 0px 47px;
+                /*float: none;*/
+            }
+            header div {
+                margin-right: 26px;
+            }
+            header div>img:first-of-type {
+                margin-right: 37px;   /*по макету*/
+            }
+            .News {
+                margin: 0px 47px;
+                display: inline-block;
+            }
+            .News>img {
+                width: 1096px;
+                height: 47px;
+            }
+            section:nth-of-type(1) {
+                margin-bottom: 20px;
+            }
+            section:nth-of-type(2) {
+                margin-bottom: 36px;
+            }
+            section h1 {
+                font-size: 30px;
+                color: rgb(91, 91, 91);
+                margin: 10px 0px;
+                text-align: center;
+                font-weight: 500;
+                line-height: 1.0;
+            }
+            section:nth-of-type(2) h1 {
+                margin: 15px 0px 18px 0px;  /*по макету*/
+            }
+            section:nth-of-type(3) h1:first-of-type {
+                margin: 10px 0px 42px 0px;
+            }
+            section:nth-of-type(3) h1:last-of-type {
+                margin: 47px 0px 30px 0px;
+            }
+            section ul {
+                padding: 0px;
+                margin: 11px 0px;   /*по макету*/
+            }
+            section:nth-child(1) ul li {
+                height: 33px;
+                font-size: 14px;
+                border: 1px solid rgb(222, 222, 222);
+            }
+            .opts {
+                display: inline-block;
+            }
+            .opts>li {
+                list-style: none;
+                padding: 0px 14px;   /*по макету*/
+                display: inline-flex;
+                justify-content: space-between;
+                width: 154px;
+                align-items: center;
+            }
+            .opts>li:nth-of-type(n+3) {
+                color: rgb(151, 151, 151);
+            }
+            .opts label>span {
+                vertical-align: text-bottom;
+            }
+            .opts label>span:after {
+                content: url("images/PNG/down-arrow-2.png");
+            }
+            .opts label, .mlist {
+                cursor: pointer;
+            }
+            .opts>li:not(:last-of-type) {             
+                border-right: 0px;
+            }
+            .opts>li:last-of-type {    
+                width: 155px;
+            }
+            .opts>li>input{
+                display: none;
+            }
+            .opts>li>input:checked ~ ul {
+                display: block;
+            }
+            .mlist {
+                box-shadow: 0 0 5px rgb(0 0 0 / 15%);
+                background-color: rgb(252, 252, 252);
+                position: absolute;
+                padding: 0px;
+                width: 155px;
+                margin: 31px 0px 0px -16px;
+                display: none;
+                align-self: flex-start;
+            }
+            .mlist li {
+                list-style: none;
+                margin: 0px;
+                padding: 0px 15px;
+                line-height: 33px;
+                border: 1px solid rgb(222, 222, 222);
+                border-top: 0px;
+            }
+            .mlist li:not(:last-of-type) {    
+                border-bottom: 0px;
+            }
+            .optsAdd {
+                float: right;
+                vertical-align: middle;
+            }
+            .optsAdd li {
+                display: inline-block;
+                list-style: none;
+                text-align: center;
+                vertical-align: middle;
+            }
+            .optsAdd li:first-of-type {
+                margin-right: 10px;
+                padding-right: 12px;
+                width: 142px;
+                line-height: 31px;      /*корректировка подбором*/
+                cursor: pointer;
+            }
+            .optsAdd li>input {
+                font: inherit;
+                border: 0px;
+                color: rgb(255, 255, 255);
+                background-color: rgb(199, 176, 132);
+                width: 133px;
+                cursor: pointer;
+                height: 100%;
+            }
+            .optsAdd li>input:hover {
+                mix-blend-mode: luminosity;
+            }
+            .content {
+                margin-top: 3px;
+                font-size: 19px;
+                display: grid;
+                gap: 10px;
+                /*grid-template-columns: repeat(4, minmax(267px, 543px));      /*помещает доступные в данный момент столбцы в пространство, расширяя их так, чтобы они занимали любое доступное пространство*/
+                /*grid-template-columns: repeat(auto-fill, minmax(267px, 1fr));*/
+                /*псевдовизуальная раскладка всех ячеек в таблице*/
+                grid-template-areas: "c1 c1 c2 c2"      /*с1 занимает 2 столбца и с2 занимает 2 столбца*/
+                                     "c3 c3 c4 c5"      /*с3 занимает 2 столбца слева, с4 и с5 по одному*/
+                                     "c6 c7 c8 c8";     /*с6 и с7 по одному, с8 занимает 2 столбца справа*/
+                grid-template-rows: 409px repeat(2, 267px); /*для первой строки высота 409px, для двух следующих 267px*/
+                grid-template-columns: repeat(4, 267px);    /*для всех столбцов ширина 267px*/
+                object-fit: cover;      /*как изображение растягивается в ячейке*/
+                /*justify-items: center;
+                align-items: center;*/
+            }
+            .content>div {
+                background-repeat: no-repeat;
+                color: rgb(51, 51, 51);
+                /*line-height: 1.2;*/
+                display: inline-flex;
+                align-items: flex-start;
+                justify-content: left;
+                flex-direction: column;
+            }
+            .content>div b {
+                font-size: 36px;
+            }
+            .content>div span {
+                background-color: rgb(255, 255, 255);
+            }
+            .content>div:nth-child(-n+2){
+                font-size: 16px;
+                color: rgb(255, 255, 255);
+                text-align: center;
+                justify-content: center;
+                align-items: center;
+                /*padding-top: 14px;   /*по макету*/
+            }
+            .content>div:nth-child(1) {
+                grid-area: c1;
+                background-image: url("images/PNG/Прямоугольник_11.png");
+            }
+            .content>div:nth-child(2) {
+                grid-area: c2;
+                background-image: url("images/PNG/Прямоугольник_1.png");
+            }
+            .content>div:nth-child(3) {
+                grid-area: c3;
+                background-image: url("images/PNG/2_копия_5.png");
+                padding: 10px 0px 0px 12px;
+            }
+            .content>div:nth-child(3)>span {
+                padding: 4px 12px;
+            }
+            .content>div:nth-child(3)::before {
+                background-color: rgb(47, 48, 50);
+                width: 156px;
+                height: 6px;
+                content: "";
+            }
+            .content>div:nth-child(4) {
+                grid-area: c4;
+                background-image: url("images/PNG/ФОТО_копия.png");
+                padding: 9px 0px 0px 9px;
+            }
+            .content>div:nth-child(4)::before {
+                background-color: rgb(47, 48, 50);
+                color: rgb(255, 255, 255);
+                width: 121px;
+                line-height: 31px;
+                content: "\00a0\00a0\00a0ПОЛЕЗНОЕ";
+                padding-right: 17px;
+                text-align: right;
+            }
+            .content>div:nth-child(4)>span:first-of-type::before {
+                content: url('images/PNG/1489097762_food-drink-01.png');
+                margin: -33px 0px 0px 3px;
+                position: absolute;
+            }
+            /*.content>div>span.mark {
+                width: 121px;
+                line-height: 32px;
+                background-color: rgb(47, 48, 50);
+                color: rgb(255, 255, 255);
+            }
+            .content>div>span.mark>img {
+                margin: 7px 12px;
+                vertical-align: bottom;
+                height: 19px;
+                width: 19px;
+            }*/
+            .content>div:nth-child(4)>span {
+                padding: 8px 12px 8px 7px;
+                line-height: 0.8;
+            }
+            .content>div:nth-child(4)>span:last-of-type {
+                padding: 0px 10px 7px 7px;
+            }
+            .content>div:nth-child(5) {
+                grid-area: c5;
+                background-image: url("images/PNG/ФОТО_копия_2.png");
+                padding: 12px 0px 0px 12px;
+            }
+            .content>div:nth-child(5)>span {
+                padding: 7px 8px 7px 10px;
+                line-height: 1.0;
+            }
+            .content>div:nth-child(5)::before {
+                background-color: rgb(47, 48, 50);
+                width: 108px;
+                height: 6px;
+                content: "";
+            }
+            .content>div:nth-child(6) {
+                grid-area: c6;
+                background-image: url("images/PNG/ФОТО_копия1.png");
+                padding: 12px 0px 0px 12px;
+            }
+            .content>div:nth-child(6)>span {
+                padding: 7px 8px 7px 10px;
+                line-height: 1.0;
+            }
+            .content>div:nth-child(6)::before {
+                background-color: rgb(47, 48, 50);
+                width: 86px;
+                height: 6px;
+                content: "";
+            }
+            .content>div:nth-child(7) {
+                grid-area: c7;
+                background-image: url("images/PNG/ФОТО_копия_2-1.png");
+                padding: 12px 0px 0px 12px;
+            }
+            .content>div:nth-child(7)>span {
+                padding: 8px 7px;
+                line-height: 0.5;
+            }
+            .content>div:nth-child(7)::before {
+                background-color: rgb(47, 48, 50);
+                width: 108px;
+                height: 6px;
+                content: "";
+            }
+            .content>div:nth-child(8) {
+                grid-area: c8;
+                background-image: url("images/PNG/2_копия_511.png");
+                padding: 12px 0px 0px 12px;
+            }
+            .content>div:nth-child(8)>span {
+                padding: 7px 8px 7px 10px;
+                line-height: 1.0;
+            }
+            .content>div:nth-child(8)::before {
+                background-color: rgb(47, 48, 50);
+                width: 156px;
+                height: 6px;
+                content: "";
+            }
+            /*section:nth-child(2) h1 {
+                margin-top: 23px;
+            }*/
+            section:nth-child(2)>form {
+                text-align: center;
+            }
+            .opts2 {
+                font-size: 16px;
+                border-radius: 30px;
+                display: inline-block;
+                /*text-align: center;*/
+                background-color: rgb(241, 241, 241);
+                height: 35px;
+                margin: 11px 0px 29px 0px;
+            }
+            .opts2>li {
+                list-style: none;
+                color: rgb(91, 91, 91);
+                width: 137px;
+                line-height: 35px;
+                display: inline-block;
+                text-align: center;
+            }
+            .opts2>li:hover {
+                color: rgb(241, 241, 241);
+                background-color: rgb(47, 48, 50);
+                cursor: pointer;
+                border-radius: 30px;
+            }
+            .content2 {
+                display: grid;
+                gap: 8px;
+                grid-template-rows: repeat(5, 270px); /*для строк 267px*/
+                grid-template-columns: repeat(2, 543px);    /*для всех столбцов ширина 543px*/
+                object-fit: cover;      /*как изображение растягивается в ячейке*/
+            }
+            .content2>div:not(.photo) {
+                border: 2px solid rgb(242, 242, 242);
+                font-size: 16px;
+                text-align: center;
+            }
+            .photo {
+                height: 100%;
+                width: 268px;
+                float: left;
+                position: relative;
+                overflow: hidden;
+                text-align: left;
+            }
+            .photo div {
+                position: absolute;
+                left: 13px;
+                bottom: 9px;
+                color: rgb(188, 188, 188);
+            }
+            .photo div>img {
+                margin-right: 10px;
+                vertical-align: middle;
+            }
+            .content2 h2 {
+                margin: 14px 0px 0px 0px;
+                color: rgb(61, 61, 61);
+                line-height: 1.0;
+                overflow: hidden;     /*ХАК! Если добавить overflow браузер будет вынужден вычислять размер элементов внутри, несмотря на то, что они float. Когда размер рассчитан, он также знает, с чего начать margin-bottom.*/
+                padding: 0px 6px;       /*скорректировано 12px->6px*/
+                height: 74px;           /*строгое задание высоты по макету*/
+            }
+            .content2 p {
+                padding: 15px 10px 0px 10px;
+                text-align: left;
+                margin: 0px;
+                line-height: 1.0;
+                color: rgb(91, 91, 91);
+                overflow: hidden;     /*ХАК! Если добавить overflow браузер будет вынужден вычислять размер элементов внутри, несмотря на то, что они float. Когда размер рассчитан, он также знает, с чего начать margin-bottom.*/
+                height: 105px;      /*строгое задание высоты по макету*/
+            }
+            .cardft {
+                border-top: 2px solid rgb(242, 242, 242);
+                height: 38px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: nowrap;
+            }
+            .cardft>div img {
+                width: 19px;
+                height: 17px;
+                vertical-align: middle;
+                margin: 0px 8px 0px 18px;
+            }
+            .cardft img+span {
+                font-size: 13px;
+                font-family: "RobotoCondensed";
+                color: rgb(155, 155, 155);
+            }
+            .cardft>img {
+                width: 77px;
+                height: 15px;
+                margin-right: 25px;
+            }
+            .specs {
+                font-size: 14px;
+                margin: 0px;
+            }
+            .specs>li {
+                list-style: none;
+                display: inline-block;
+                border: 1px solid rgb(232, 232, 232);
+                width: 80px;
+                line-height: 27px;
+                border-radius: 12px;
+                color: rgb(181, 144, 78);
+            }
+            .specs li:not(:last-of-type) {
+                margin-right: 7px;
+            }
+            .specs>li>img{
+                margin-right: 7px;
+                vertical-align: text-bottom;
+                width: 17px;
+                height: 17px;
+            }
+            .content3 {
+                display: grid;
+                gap: 10px;
+                grid-template-rows: 427px; /*для строки 427px*/
+                grid-template-columns: repeat(4, 267px);    /*для всех столбцов ширина 267px*/
+                object-fit: cover;      /*как изображение растягивается в ячейке*/
+                font-size: 30px;
+            }
+            .content3>div {
+                display: inline-flex;       /*используется flex для прижатия текста к низу блока - другие способы (в том числе выравнивание по низу относительно content:'') работают несколько не так как требуется*/
+                justify-content: center;
+                align-items: flex-end;
+                color: rgb(240, 240, 240);
+                padding-bottom: 36px;
+                background-repeat: no-repeat;
+            }
+            .content3>div:nth-child(1) {
+                background-image: url("images/PNG/4_копия_14.png");
+            }
+            .content3>div:nth-child(2) {
+                background-image: url("images/PNG/4_копия_17.png");
+            }
+            .content3>div:nth-child(3) {
+                background-image: url("images/PNG/4_копия_16.png");
+            }
+            .content3>div:nth-child(4) {
+                background-image: url("images/PNG/4_копия_15.png");
+            }
+            section:nth-of-type(3) {
+                text-align: center;
+            }
+            .content3>img {
+                width: 905px;
+                height: 58px;
+                display: block;
+                margin: 0px auto;
+            }
+            footer {
+                background-color: rgb(232, 232, 232);
+                text-align: center;
+                margin-top: 18px;
+            }
+            footer>div:first-of-type {
+                font-size: 14px;
+                color: rgb(37, 38, 39);
+                padding-top: 19px;
+                height: 126px;
+            }
+            footer input {
+                font-family: inherit;
+                font-size: 12px;
+                color: rgb(167, 167, 167);
+                border: none;
+                background-color: rgb(252, 252, 252);
+                padding-left: 17px;
+                outline: none;
+                margin-top: 13px;
+                width: 319px;       /*349px- ширина .subbutton*/
+                height: 30px;
+                vertical-align: bottom;
+                }
+            footer ::placeholder {
+                color: rgb(167, 167, 167);
+                opacity: 1.0;
+            }
+            .subbutton {
+                background-color: rgb(47, 48, 50);
+                width: 30px;
+                height: 30px;
+                border: none;
+                cursor: pointer;
+                text-align: center;
+                padding-right: 2px;
+            }
+            .subbutton img {
+                vertical-align: middle;
+            }
+            footer>div:last-of-type {
+                background-color: rgb(37, 38, 39);
+                height: 61px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: nowrap;
+                padding: 0px 47px;
+            }
+            .pars {
+                font-size: 13px;
+                color: rgb(148, 148, 148);
+                padding: 0px;
+            }
+            .pars li {
+                list-style: none;
+                cursor: pointer;
+                margin-right: 26px;
+                display: inline-block;
+            }
+            /*.content3>div {
+                background-repeat: no-repeat;
+                color: rgb(51, 51, 51);
+                display: inline-flex;
+                align-items: flex-start;
+                justify-content: left;
+                flex-direction: column;
+            }*/
+            /*select {
+                outline: none;
+                border: none;
+                overflow: hidden;
+                width: 100%;
+            }
+            option[selected] {
+                content: "";
+                width: 40px;
+                background-color: rgb(217, 190, 143);*/
+        </style>
+    </head>
+    <body>
+        <div class="artboard">
+            <nav class="Menu">
+                <img src="images/PNG/Слой_2.png" alt="Name">
+                <ul><li>РЕЦЕПТЫ</li><li>ПРОДУКТЫ</li><li>КАК ПРИГОТОВИТЬ</li><li>КУЛИНАРНАЯ КНИГА</li><li>ЗДОРОВЬЕ</li><li>АВТОРЫ</li></ul>
+                <div>
+                    <input type="radio" id="ru" name="lang" value="ru" checked>
+                    <label for="ru">RU</label>
+                    <input type="radio" id="en" name="lang" value="en">
+                    <label for="en">EN</label>
+                </div>
+                <img src="images/PNG/socialNets.png" usemap="#socNets" alt="Social Icons">
+                <map name="socNets"><area shape="rect" coords="0,0,15,12" href="#" alt="VK"><area shape="rect" coords="25,0,33,14" href="#" alt="Facebook"><area shape="rect" coords="46,0,59,12" href="#" alt="Instagram"><area shape="rect" coords="73,0,84,12" href="#" alt="Google+"></map>
+            </nav>
+            <div>
+                <header>
+                    <img src="images/PNG/search.png" alt="Social Icons">
+                    <div><img src="images/PNG/bell.png" alt="Bell Icon"><img src="images/PNG/userPROFILE.png" alt="User Icon"></div>
+                </header>
+                <div class="News">
+                    <section>
+                        <img src="images/PNG/bough.png" alt="Delimiter">
+                        <h1>ПОДБОР РЕЦЕПТОВ</h1>
+                        <form action="#">
+                            <ul class="opts">
+                                <li>Выпечка и десерты<label for="arrow0"><span></span></label>
+                                    <input id="arrow0" type="checkbox">
+                                    <ul class="mlist">
+                                        <li>Соусы и заправки</li>
+                                        <li>Фрукты и овощи</li>
+                                        <li>Мясо и закуски</li>
+                                    </ul>
+                                </li><li>Любое блюдо<label for="arrow1"><span></span></label>
+                                    <input id="arrow1" type="checkbox">
+                                    <ul class="mlist">
+                                        <li>Соусы и заправки</li>
+                                        <li>Фрукты и овощи</li>
+                                        <li>Мясо и закуски</li>
+                                    </ul>
+                                </li><li>Любая кухня<label for="arrow2"><span></span></label>
+                                    <input id="arrow2" type="checkbox">
+                                    <ul class="mlist">
+                                        <li>Соусы и заправки</li>
+                                        <li>Фрукты и овощи</li>
+                                        <li>Мясо и закуски</li>
+                                    </ul>
+                                </li><li>Любое меню<label for="arrow3"><span></span></label>
+                                    <input id="arrow3" type="checkbox">
+                                    <ul class="mlist">
+                                        <li>Соусы и заправки</li>
+                                        <li>Фрукты и овощи</li>
+                                        <li>Мясо и закуски</li>
+                                    </ul>
+                                </li><li>Сложность<label for="arrow4"><span></span></label>
+                                    <input id="arrow4" type="checkbox">
+                                    <ul class="mlist">
+                                        <li>Соусы и заправки</li>
+                                        <li>Фрукты и овощи</li>
+                                        <li>Мясо и закуски</li>
+                                    </ul>
+                                </li></ul>  
+                                <ul class="optsAdd">
+                                    <li>Ингредиенты, детали</li>
+                                    <li><input type="submit" value="Подобрать рецепты"></li>
+                                <!--</ul>-->
+                            </ul>
+                        </form>
+                        <div class="content">
+                            <div>БЛЮДО ДНЯ<b>КУРИНЫЕ НОЖКИ НА ГРИЛЕ</b><img src="images/PNG/ICONS.png" alt="Icons"></div>
+                            <div>ЛУЧШИЕ РЕЦЕПТЫ НЕДЕЛИ<b>7 ЛУЧШИХ РЕЦЕПТОВ<br>НЕДЕЛИ</b><img src="images/PNG/ICONS.png" alt="Icons"></div>
+                            <div><span>КАК ПРИГОТОВИТЬ ПИРОГ В ОДНОЙ ПОСУДЕ 5 РЕЦЕПТОВ</span></div>
+                            <div><!--<span class="mark"><img src="images/PNG/1489097762_food-drink-01.png">ПОЛЕЗНОЕ</span>--><span>КАК ПРИГОТОВИТЬ СЫРНЫЙ ТОРТ</span><span>С ОВОЩАМИ</span></div>
+                            <div><span>10 ПРОСТЫХ НАПИТКОВ В ЖАРУ</span></div>
+                            <div><span>ЧТО ТАКОЕ МЕД ?</span></div>
+                            <div><span>КАК ПРАВИЛЬНО ЗАМЕСИТЬ ДРОЖЕВОЕ</span><span>ТЕСТО</span></div>
+                            <div><span>ЧЕЛОВЕК, КОТОРЫЙ ДЕЛАЕТ ЛУЧШИЕ МИТБОЛЫ В БЕЛЬГИИ</span></div>
+                        </div>
+                    </section>
+                    <section>
+                        <img src="images/PNG/bough.png" alt="Delimiter">
+                        <h1>РЕЦЕПТЫ</h1>
+                        <form action="#">
+                            <ul class="opts2">
+                                <li>Новые рецепты</li><li>Популярные</li><li>Рекомендуем</li>
+                            </ul>
+                        </form>
+                        <div class="content2">
+                            <div><div class="photo"><img src="images/PNG/ФОТО.png" alt="Photo"><div><img src="images/PNG/Эллипс_1.png" alt="AuthorPhoto">Daria Fedorenko</div></div>
+                                <div><h2>Утиные ножки с овощами и грудинкой</h2>
+                                        <ul class="specs">
+                                            <li><img src="images/PNG/1488832693_access-time.png" alt="access-time">135 мин</li><li><img src="images/PNG/1488832954_food-drink-01.png" alt="food-drink">Сложно</li><li><img src="images/PNG/kaloriy_3.png" alt="kaloriy">125 ккал</li>
+                                        </ul>
+                                        <p>говядина, масло топлёное, лук репчатый, морковь, редька, перец сладкий, помидоры, томат-пюре, картофель, чеснок, бульон мясной, соль, перец чёрный, зелень петрушки...</p>
+                                </div>
+                                <div class="cardft"><div><img src="images/PNG/like.png" alt="like"><span>16</span></div><img src="images/PNG/socGroup.png" alt="socGroup"></div>
+                            </div>
+                            <div><div class="photo"><img src="images/PNG/ФОТО3.png" alt="Photo"><div><img src="images/PNG/Эллипс_1.png" alt="AuthorPhoto">Hristin Fedorenko</div></div>
+                                <div><h2>Салат из свеклы с козьим сыром и медовой заправкой</h2>
+                                        <ul class="specs">
+                                            <li><img src="images/PNG/1488832693_access-time.png" alt="access-time">35 мин</li><li><img src="images/PNG/1488832954_food-drink-01.png" alt="food-drink">Сложно</li><li><img src="images/PNG/kaloriy_3.png" alt="kaloriy">125 ккал</li>
+                                        </ul>
+                                        <p>говядина, масло топлёное, лук репчатый, морковь, редька, перец сладкий, помидоры, томат-пюре, картофель</p>
+                                </div><div class="cardft"><div><img src="images/PNG/like.png" alt="like"><span>16</span></div><img src="images/PNG/socGroup.png" alt="socGroup"></div>
+                            </div>
+                            <div><div class="photo"><img src="images/PNG/ФОТО12.png" alt="Photo"><div><img src="images/PNG/Эллипс_1.png" alt="AuthorPhoto">Dariya Fedorenko</div></div>
+                                <div><h2>Американский тыквенный пирог с корицей</h2>
+                                        <ul class="specs">
+                                            <li><img src="images/PNG/1488832693_access-time.png" alt="access-time">240 мин</li><li><img src="images/PNG/1488832954_food-drink-01.png" alt="food-drink">Сложно</li><li><img src="images/PNG/kaloriy_3.png" alt="kaloriy">125 ккал</li>
+                                        </ul>
+                                        <p>лук репчатый, морковь, редька, перец сладкий, помидоры, томат-пюре, картофель, чеснок, бульон мясной,соль, перец чёрный, зелень петрушки...</p>
+                                </div><div class="cardft"><div><img src="images/PNG/like.png" alt="like"><span>16</span></div><img src="images/PNG/socGroup.png" alt="socGroup"></div>
+                            </div>
+                            <div><div class="photo"><img src="images/PNG/ФОТО2.png" alt="Photo"><div><img src="images/PNG/Эллипс_1.png" alt="AuthorPhoto">Dariya Fedorenko</div></div>
+                                <div><h2>Салат «Цезарь» традиционный фасолью</h2>
+                                        <ul class="specs">
+                                            <li><img src="images/PNG/1488832693_access-time.png" alt="access-time">107 мин</li><li><img src="images/PNG/1488832954_food-drink-01.png" alt="food-drink">Сложно</li><li><img src="images/PNG/kaloriy_3.png" alt="kaloriy">125 ккал</li>
+                                        </ul>
+                                        <p>говядина, масло топлёное, лук репчатый, морковь, редька, перец сладкий, помидоры, томат-пюре, картофель, чеснок, бульон мясной, соль, перец чёрный</p>
+                                </div><div class="cardft"><div><img src="images/PNG/like.png" alt="like"><span>16</span></div><img src="images/PNG/socGroup.png" alt="socGroup"></div>
+                            </div>
+                            <div><div class="photo"><img src="images/PNG/ФОТО-1.png" alt="Photo"><div><img src="images/PNG/Эллипс_1.png" alt="AuthorPhoto">Daria Fedorenko</div></div>
+                                <div><h2>Соте из брюссельской капусты с варено-копченым окороком</h2>
+                                        <ul class="specs">
+                                            <li><img src="images/PNG/1488832693_access-time.png" alt="access-time">135 мин</li><li><img src="images/PNG/1488832954_food-drink-01.png" alt="food-drink">Сложно</li><li><img src="images/PNG/kaloriy_3.png" alt="kaloriy">125 ккал</li>
+                                        </ul>
+                                        <p>говядина, масло топлёное, лук репчатый, морковь, редька, перец сладкий, помидоры, томат-пюре, картофель, чеснок, бульон мясной, соль, перец чёрный, зелень петрушки...</p>
+                                </div><div class="cardft"><div><img src="images/PNG/like.png" alt="like"><span>16</span></div><img src="images/PNG/socGroup.png" alt="socGroup"></div>
+                            </div>
+                            <div><div class="photo"><img src="images/PNG/ФОТО1.png" alt="Photo"><div><img src="images/PNG/Эллипс_1.png" alt="AuthorPhoto">Hristin Fedorenko</div></div>
+                                <div><h2>Жареные баклажаны с помидорами</h2>
+                                        <ul class="specs">
+                                            <li><img src="images/PNG/1488832693_access-time.png" alt="access-time">35 мин</li><li><img src="images/PNG/1488832954_food-drink-01.png" alt="food-drink">Сложно</li><li><img src="images/PNG/kaloriy_3.png" alt="kaloriy">125 ккал</li>
+                                        </ul>
+                                        <p>говядина, масло топлёное, лук репчатый, морковь, редька, перец сладкий, помидоры, томат-пюре, картофель</p>
+                                </div><div class="cardft"><div><img src="images/PNG/like.png" alt="like"><span>16</span></div><img src="images/PNG/socGroup.png" alt="socGroup"></div>
+                            </div>
+                            <div><div class="photo"><img src="images/PNG/ФОТО11.png" alt="Photo"><div><img src="images/PNG/Эллипс_1.png" alt="AuthorPhoto">Dariya Fedorenko</div></div>
+                                <div><h2>Наварен из говядины</h2>
+                                        <ul class="specs">
+                                            <li><img src="images/PNG/1488832693_access-time.png" alt="access-time">240 мин</li><li><img src="images/PNG/1488832954_food-drink-01.png" alt="food-drink">Сложно</li><li><img src="images/PNG/kaloriy_3.png" alt="kaloriy">125 ккал</li>
+                                        </ul>
+                                        <p>лук репчатый, морковь, редька, перец сладкий, помидоры, томат-пюре, картофель, чеснок, бульон мясной,соль, перец чёрный, зелень петрушки...</p>
+                                </div><div class="cardft"><div><img src="images/PNG/like.png" alt="like"><span>16</span></div><img src="images/PNG/socGroup.png" alt="socGroup"></div>
+                            </div>
+                            <div><div class="photo"><img src="images/PNG/ФОТО21.png" alt="Photo"><div><img src="images/PNG/Эллипс_1.png" alt="AuthorPhoto">Dariya Fedorenko</div></div>
+                                <div><h2>Брюссельская капуста с белым соусом с сыром</h2>
+                                        <ul class="specs">
+                                            <li><img src="images/PNG/1488832693_access-time.png" alt="access-time">107 мин</li><li><img src="images/PNG/1488832954_food-drink-01.png" alt="food-drink">Сложно</li><li><img src="images/PNG/kaloriy_3.png" alt="kaloriy">125 ккал</li>
+                                        </ul>
+                                        <p>говядина, масло топлёное, лук репчатый, морковь, редька, перец сладкий, помидоры, томат-пюре, картофель, чеснок, бульон мясной, соль, перец чёрный</p>
+                                </div><div class="cardft"><div><img src="images/PNG/like.png" alt="like"><span>16</span></div><img src="images/PNG/socGroup.png" alt="socGroup"></div>
+                            </div>
+                            <div><div class="photo"><img src="images/PNG/ФОТО111.png" alt="Photo"><div><img src="images/PNG/Эллипс_1.png" alt="AuthorPhoto">Dariya Fedorenko</div></div>
+                                <div><h2>Печеночный торт с морковью и луком</h2>
+                                        <ul class="specs">
+                                            <li><img src="images/PNG/1488832693_access-time.png" alt="access-time">240 мин</li><li><img src="images/PNG/1488832954_food-drink-01.png" alt="food-drink">Сложно</li><li><img src="images/PNG/kaloriy_3.png" alt="kaloriy">125 ккал</li>
+                                        </ul>
+                                        <p>лук репчатый, морковь, редька, перец сладкий, помидоры, томат-пюре, картофель, чеснок, бульон мясной,соль, перец чёрный, зелень петрушки...</p>
+                                </div><div class="cardft"><div><img src="images/PNG/like.png" alt="like"><span>16</span></div><img src="images/PNG/socGroup.png" alt="socGroup"></div>
+                            </div>
+                            <div><div class="photo"><img src="images/PNG/ФОТО21-1.png" alt="Photo"><div><img src="images/PNG/Эллипс_1.png" alt="AuthorPhoto">Dariya Fedorenko</div></div>
+                                <div><h2>Классический крабовый салат с огурцом и мидиями</h2>
+                                        <ul class="specs">
+                                            <li><img src="images/PNG/1488832693_access-time.png" alt="access-time">107 мин</li><li><img src="images/PNG/1488832954_food-drink-01.png" alt="food-drink">Сложно</li><li><img src="images/PNG/kaloriy_3.png" alt="kaloriy">125 ккал</li>
+                                        </ul>
+                                        <p>говядина, масло топлёное, лук репчатый, морковь, редька, перец сладкий, помидоры, томат-пюре, картофель, чеснок, бульон мясной, соль, перец чёрный</p>
+                                </div><div class="cardft"><div><img src="images/PNG/like.png" alt="like"><span>16</span></div><img src="images/PNG/socGroup.png" alt="socGroup"></div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <img src="images/PNG/bough.png" alt="Delimiter">
+                        <h1>#ГОРЯЧАЯПОДБОРКА</h1>
+                        <div class="content3">
+                            <div>ПОХМЕЛЬНЫЕ<br>РЕЦЕПТЫ</div>
+                            <div>МАСЛЕНИЦА</div>
+                            <div>РЕЦЕПТЫ<br>ДЛЯ<br>ДЕТЕЙ</div>
+                            <div>ЗДОРОВОЕ<br>ПИТАНИЕ</div>
+                        </div>
+                        <h1>ТОП АВТОРОВ</h1>
+                        <img src="images/PNG/Слой_214.png" alt="Authors">
+                    </section>
+                </div>
+                <footer>
+                    <div>ПОДПИШИТЕСЬ НА РАССЫЛКУ РЕЦЕПТОВ И СОВЕТОВ
+                        <form action="#">
+                            <input type="text" name="email" placeholder="Адрес электронной почты"><button type="submit" class="subbutton" name="subm"><img src="images/PNG/icon-ios7-arrow-back-512.png" alt="ArrowRIcon"></button>
+                        </form>
+                    </div>
+                    <div><ul class="pars"><li>ГЛАВНАЯ</li><li>РЕЦЕПТЫ</li><li>ИДЕИ</li><li>ЖУРНАЛ</li><li>АВТОРЫ</li><li>РЕКЛАМА</li><li>FAQ</li></ul>
+                        <div>
+                            <img src="images/PNG/socNetsGray.png" usemap="#socNetsG" alt="SocialNetsG Icons">
+                            <map name="socNetsG"><area shape="rect" coords="0,0,15,12" href="#" alt="VK"><area shape="rect" coords="25,0,33,14" href="#" alt="Facebook"><area shape="rect" coords="46,0,59,12" href="#" alt="Instagram"><area shape="rect" coords="73,0,84,12" href="#" alt="Google+"></map>
+                        </div>
+                    </div>    
+                </footer>
+            </div>
+        </div>
+    </body>
+</html>
