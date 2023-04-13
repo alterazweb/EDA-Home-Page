@@ -13,12 +13,11 @@ box-sizing: border-box;
 body {
 width: 1366px;
 margin: 0px auto;
-background-color: rgb(252, 252, 252);
 font-family: "PFDinTextCompPro";
 }
 .artboard {
+background-color: rgb(252, 252, 252);
 display: inline-flex;
-border: 1px solid rgb(127,127,127);
 }
 .Menu {
 width: 173px;
